@@ -40,14 +40,12 @@ export let moveWord = (word, {xmin = 1, xmax = 1, ymin = 1, ymax = 1} = {}) => {
 
 // VIEW ============================================================================================
 export function BoardView({words}) {
-  return <>
-    <div className="board-wrapper">
-      <div className="board">
-        {words.map(({str, x, y}, i) => <span key={i} className="word" style={{
-          left: x + "%",
-          bottom: y + "%",
-        }}>{str}</span>)}
-      </div>
+  return <div className="board-wrapper">
+    <div className="board">
+      {words.map(({str, x, y}, i) => <span key={i} className="word" style={{
+        left: x + "%",
+        bottom: y + "%",
+      }}>{str}</span>)}
     </div>
     <style jsx>{`
       .board-wrapper {
@@ -71,7 +69,7 @@ export function BoardView({words}) {
         padding: 0 0.5rem;
       }
     `}</style>
-  </>
+  </div>
 }
 
 export function ScreenView({className, children}) {

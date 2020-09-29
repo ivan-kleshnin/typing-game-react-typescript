@@ -192,33 +192,53 @@ function ScreenBoxView({input, status, words}) {
 
 function StatusLineView({status, input, secondsLeft}) {
   function LeftSide({status, input}) {
-    return <div>
-      {
-        (_ => {
-           switch (status) {
-            case Status.Running: return (input ? input : "|")
-            case Status.Paused:  return "..."
-            default:             return "Lets Go!"
+    return <>
+      <div className={`left-side ${status.toLowerCase()}`}>
+        {
+          (_ => {
+             switch (status) {
+              case Status.Running: return input
+              case Status.Paused:  return "..."
+              default:             return "Lets Go!"
+            }
+          })()
+        }
+        <style jsx>{`
+          .left-side.running::after {
+            content: "|";
+            top: 10px;
+            font-size: 2rem;
+            animation: 1s blink step-end infinite;
+          }  
+          @keyframes blink {
+            from, to {
+              color: black;
+            }
+            50% {
+              color: transparent;
+            }
           }
-        })()
-      }
-    </div>
+        `}</style>
+      </div>
+    </>
   }
 
   function RightSide({status, secondsLeft}) {
     return <>
-      {
-        (_ => {
-          switch (status) {
-            case Status.Running: return `Seconds left: ${secondsLeft}`
-            case Status.Paused:  return "[PAUSED]"
-            case Status.Lost:    return ":("
-            case Status.Won:     return ":("
-            case Status.Stopped: return "^_^"
-            default:             throw Error(`invalid status ${status}`)
-          }
-        })()
-      }
+      <div className="right-side">
+        {
+          (_ => {
+            switch (status) {
+              case Status.Running: return `Seconds left: ${secondsLeft}`
+              case Status.Paused:  return "[PAUSED]"
+              case Status.Lost:    return ":("
+              case Status.Won:     return ":("
+              case Status.Stopped: return "^_^"
+              default:             throw Error(`invalid status ${status}`)
+            }
+          })()
+        }
+      </div>
     </>
   }
 
